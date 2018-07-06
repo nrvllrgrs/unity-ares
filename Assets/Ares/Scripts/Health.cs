@@ -1,28 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using Ares.Data;
 
 namespace Ares
 {
-	public class HealthChangedEvent : UnityEvent<float, float, GameObject>
-	{ }
-
-	public class Health : MonoBehaviour
+	public class Health : AresMonoBehaviour<HealthData>, IHealth
 	{
-		#region Variables
-
-		#endregion
-
-		#region Events
-
-		#endregion
-
-		#region Properties
-
-		#endregion
-
 		#region Methods
+
+		protected override void Reset()
+		{
+			data = new HealthData(this);
+		}
 
 		#endregion
 	}

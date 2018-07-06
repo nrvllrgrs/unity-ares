@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Ares
 {
@@ -77,7 +75,7 @@ namespace Ares
 			if (victim == null)
 				return;
 
-			var health = victim.GetComponent<Health>();
+			var health = victim.GetComponent<IHealth>();
 			if (health != null)
 			{
 				float f = 1f;
@@ -86,7 +84,7 @@ namespace Ares
 					f = impactFalloff.Evaluate(distance / impactRange);
 				}
 
-				//!!!health.Damage(new DamageActionInfo(impactDamage * f * damageFactor));
+				health.data.Damage(new DamageActionInfo(impactDamage * f * damageFactor));
 			}
 
 			var rigidbody = victim.GetComponent<Rigidbody>();
@@ -104,7 +102,7 @@ namespace Ares
 
 			foreach (var collider in Physics.OverlapSphere(contact, splashRange))
 			{
-				var health = collider.GetComponent<Health>();
+				var health = collider.GetComponent<IHealth>();
 				if (health != null)
 				{
 					float f = 1f;
@@ -113,7 +111,7 @@ namespace Ares
 						f = splashFalloff.Evaluate(Vector3.Distance(contact, health.transform.position) / splashRange);
 					}
 
-					//!!!health.Damage(new DamageActionInfo(splashDamage * f * damageFactor));
+					health.data.Damage(new DamageActionInfo(splashDamage * f * damageFactor));
 				}
 
 				var rigidbody = collider.GetComponent<Rigidbody>();
@@ -122,6 +120,32 @@ namespace Ares
 					rigidbody.AddExplosionForce(splashImpulse, contact, splashRange);
 				}
 			}
+		}
+
+		#endregion
+	}
+
+	public class DamageActionInfo
+	{
+		#region Properties
+
+		public float value { get; private set; }
+		public int killerId { get; private set; }
+		public int victimId { get; private set; }
+
+		#endregion
+
+		#region Constructors
+
+		public DamageActionInfo(float value)
+			: this(value, -1, -1)
+		{ }
+
+		public DamageActionInfo(float value, int killerId, int victimId)
+		{
+			this.value = value;
+			this.killerId = killerId;
+			this.victimId = victimId;
 		}
 
 		#endregion

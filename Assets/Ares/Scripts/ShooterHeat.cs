@@ -1,156 +1,25 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
+using Ares.Data;
 
 namespace Ares
 {
-	public class ShooterHeat : ShooterBlocker
+	[RequireComponent(typeof(ShooterController))]
+	public class ShooterHeat : AresMonoBehaviour<ShooterHeatData>, IShooterHeat, IShooterBlocker
 	{
-		#region Variables
-
-		public float maxHeat;
-		public float heatPerShot;
-
-		public float cooldownDelay;
-		public float cooldownRate;
-
-		public float overheatDelay;
-		public float overheatRate;
-
-		private float m_heat;
-		private bool m_isOverheated;
-		private Coroutine m_thread;
-
-		#endregion
-
-		#region Events
-
-		public UnityEvent onHeatChanged = new UnityEvent();
-		public UnityEvent onBeginOverheat = new UnityEvent();
-		public UnityEvent onEndOverheat = new UnityEvent();
-
-		#endregion
-
 		#region Properties
 
-		public override bool canFire
+		public ShooterBlockerData blockerData
 		{
-			get { return !isOverheated; }
-		}
-
-		public float heat
-		{
-			get { return m_heat; }
-			private set
-			{
-				value = Mathf.Clamp(value, 0f, maxHeat);
-				if (heat == value)
-					return;
-
-				m_heat = value;
-				onHeatChanged.Invoke();
-			}
-		}
-
-		public float percent
-		{
-			get { return heat / maxHeat; }
-		}
-
-		public bool isOverheated
-		{
-			get { return m_isOverheated; }
-			private set
-			{
-				if (isOverheated == value)
-					return;
-
-				m_isOverheated = value;
-				if (isOverheated)
-				{
-					onBeginOverheat.Invoke();
-				}
-				else
-				{
-					onEndOverheat.Invoke();
-				}
-			}
+			get { return data; }
 		}
 
 		#endregion
 
 		#region Methods
 
-		protected virtual void Awake()
+		protected override void Reset()
 		{
-			controller.onShotFired.AddListener(OnShotFired);
-		}
-
-		private void OnShotFired()
-		{
-			heat += controller.isContinuous
-				? heatPerShot * Time.deltaTime
-				: heatPerShot;
-
-			if (heat == maxHeat)
-			{
-				m_thread = StartCoroutine(OverheatThread());
-			}
-			else
-			{
-				// Stop cooldown thread, assuming it exists
-				if (m_thread != null)
-				{
-					StopCoroutine(m_thread);
-				}
-
-				m_thread = StartCoroutine(CooldownThread());
-			}
-		}
-
-		private IEnumerator CooldownThread()
-		{
-			if (cooldownDelay > 0f)
-			{
-				yield return new WaitForSeconds(cooldownDelay);
-			}
-
-			while (true)
-			{
-				yield return new WaitForEndOfFrame();
-				heat -= cooldownRate * Time.deltaTime;
-
-				if (heat == 0f)
-				{
-					break;
-				}
-			}
-
-			m_thread = null;
-		}
-
-		private IEnumerator OverheatThread()
-		{
-			isOverheated = true;
-
-			if (overheatDelay > 0f)
-			{
-				yield return new WaitForSeconds(overheatDelay);
-			}
-
-			while (true)
-			{
-				yield return new WaitForEndOfFrame();
-				heat -= overheatRate * Time.deltaTime;
-
-				if (heat == 0f)
-				{
-					break;
-				}
-			}
-
-			isOverheated = false;
-			m_thread = null;
+			data = new ShooterHeatData(this);
 		}
 
 		#endregion

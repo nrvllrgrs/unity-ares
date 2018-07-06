@@ -63,7 +63,7 @@ namespace Ares
 
 			if (clip != null)
 			{
-				if (controller.isContinuous)
+				if (controller.data.isContinuous)
 				{
 					var audio = muzzleBone.GetComponent<AudioSource>();
 					if (audio == null)
@@ -77,19 +77,19 @@ namespace Ares
 					audio.clip = clip;
 					audio.volume = volume;
 
-					controller.onBeginFire.AddListener(() =>
+					controller.data.onBeginFire.AddListener(() =>
 					{
 						audio.Play();
 					});
 
-					controller.onEndFire.AddListener(() =>
+					controller.data.onEndFire.AddListener(() =>
 					{
 						audio.Stop();
 					});
 				}
 				else
 				{
-					controller.onShotFired.AddListener(() =>
+					controller.data.onShotFired.AddListener(() =>
 					{
 						AudioSource.PlayClipAtPoint(clip, muzzleBone.position, volume);
 					});

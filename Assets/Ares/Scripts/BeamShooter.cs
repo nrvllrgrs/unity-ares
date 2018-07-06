@@ -1,16 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Ares.Data;
 
-public class BeamShooter : MonoBehaviour {
+namespace Ares
+{
+	[RequireComponent(typeof(ShooterController))]
+	public class BeamShooter : AresMonoBehaviour<BeamShooterData>, IShooter<BeamShooterData>, IShooter
+	{
+		#region Properties
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		public ShooterData shooterData
+		{
+			get { return data; }
+		}
+
+		#endregion
+
+		#region Methods
+
+		protected override void Reset()
+		{
+			data = new BeamShooterData(this);
+		}
+
+		#endregion
 	}
 }

@@ -1,16 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Ares.Data;
+using Ares.Events;
 
-public class Projectile : MonoBehaviour {
+namespace Ares
+{
+	[RequireComponent(typeof(Collider))]
+	[RequireComponent(typeof(CollisionCallback))]
+	[RequireComponent(typeof(Rigidbody))]
+	public class Projectile : AresMonoBehaviour<ProjectileData>, IProjectile
+	{
+		#region Variables
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		private Collider m_collider;
+		private CollisionCallback m_collisionCallback;
+		private Rigidbody m_rigidbody;
+
+		#endregion
+
+		#region Properties
+
+		public new Collider collider
+		{
+			get
+			{
+				if (m_collider == null)
+				{
+					m_collider = GetComponent<Collider>();
+				}
+				return m_collider;
+			}
+		}
+
+		public CollisionCallback collisionCallback
+		{
+			get
+			{
+				if (m_collisionCallback == null)
+				{
+					m_collisionCallback = GetComponent<CollisionCallback>();
+				}
+				return m_collisionCallback;
+			}
+		}
+
+		public new Rigidbody rigidbody
+		{
+			get
+			{
+				if (m_rigidbody == null)
+				{
+					m_rigidbody = GetComponent<Rigidbody>();
+				}
+				return m_rigidbody;
+			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		protected override void Reset()
+		{
+			data = new ProjectileData(this);
+		}
+
+		#endregion
 	}
 }

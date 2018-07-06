@@ -27,6 +27,22 @@ namespace Ares
 			}
 		}
 
+		public Transform source { get; set; }
+
+		#endregion
+
+		#region Methods
+
+		public void Refresh(Vector3 src, Vector3 dst)
+		{
+			Vector3 direction = (dst - src).normalized * Camera.main.farClipPlane;
+			lineRenderer.SetPositions(new[]
+			{
+				src,
+				src + direction
+			});
+		}
+
 		#endregion
 	}
 }

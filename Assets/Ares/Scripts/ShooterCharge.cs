@@ -1,113 +1,25 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using Ares.Data;
 
 namespace Ares
 {
-	public class ShooterCharge : ShooterBlocker
+	[RequireComponent(typeof(ShooterController))]
+	public class ShooterCharge : AresMonoBehaviour<ShooterChargeData>, IShooterCharge, IShooterBlocker
 	{
-		#region Variables
-
-		/// <summary>
-		/// Seconds before controller can shoot
-		/// </summary>
-		public float maxCharge;
-
-		/// <summary>
-		/// Indicates whether charge is reset when "Fire" ends (otherwise, value charges down)
-		/// </summary>
-		public bool resetOnEndFire;
-
-		private Coroutine m_thread;
-		private float m_charge;
-
-		#endregion
-
 		#region Properties
 
-		public override bool canFire
+		public ShooterBlockerData blockerData
 		{
-			get { return charge == maxCharge; }
-		}
-
-		public float charge
-		{
-			get { return m_charge; }
-			private set
-			{
-				value = Mathf.Clamp(value, 0f, maxCharge);
-				if (charge == value)
-					return;
-
-				m_charge = value;
-			}
-		}
-
-		public float percent
-		{
-			get { return charge / maxCharge; }
+			get { return data; }
 		}
 
 		#endregion
 
 		#region Methods
 
-		protected virtual void Awake()
+		protected override void Reset()
 		{
-			controller.onBeginFire.AddListener(OnBeginFire);
-			controller.onEndFire.AddListener(OnEndFire);
-		}
-
-		private void OnBeginFire()
-		{
-			if (m_thread != null)
-			{
-				StopCoroutine(m_thread);
-			}
-
-			m_thread = StartCoroutine(ChargeUpThread());
-		}
-
-		private void OnEndFire()
-		{
-			if (m_thread != null)
-			{
-				StopCoroutine(m_thread);
-			}
-
-			if (resetOnEndFire)
-			{
-				charge = 0;
-			}
-			else
-			{
-				m_thread = StartCoroutine(ChargeDownThread());
-			}
-		}
-
-		private IEnumerator ChargeUpThread()
-		{
-			// Spin up
-			while (true)
-			{
-				yield return new WaitForEndOfFrame();
-
-				charge += Time.deltaTime;
-				if (charge == maxCharge)
-					break;
-			}
-		}
-
-		private IEnumerator ChargeDownThread()
-		{
-			// Spin down
-			while (true)
-			{
-				yield return new WaitForEndOfFrame();
-
-				charge -= Time.deltaTime;
-				if (charge == 0)
-					break;
-			}
+			data = new ShooterChargeData(this);
 		}
 
 		#endregion

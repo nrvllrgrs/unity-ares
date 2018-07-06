@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Ares;
+using Ares.Data;
 
-namespace Ares
+namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterController))]
-	public class ShooterControllerEditor : AresEditor
+	public class ShooterControllerEditor : Editor
 	{
 		#region Variables
 
 		private ShooterController m_controller;
+		private SerializedProperty m_data;
+
 		private SerializedProperty m_isPlayerControlled;
 
 		// Controls
@@ -37,53 +41,69 @@ namespace Ares
 
 		#endregion
 
+		#region Properties
+
+		private ShooterAmmoData ammo
+		{
+			get
+			{
+				if (m_controller == null)
+					return null;
+
+				if (m_controller.data.ammo == null)
+					return null;
+
+				return m_controller.data.ammo.data;
+			}
+		}
+
+		#endregion
+
 		#region Methods
 
 		private void OnEnable()
 		{
 			m_controller = (ShooterController)target;
-			m_isPlayerControlled = serializedObject.FindProperty("isPlayerControlled");
+			m_data = serializedObject.FindProperty("m_data");
+
+			m_isPlayerControlled = m_data.FindPropertyRelative("isPlayerControlled");
 
 			// Controls
-			m_isContinuous = serializedObject.FindProperty("isContinuous");
-			m_isAutoFire = serializedObject.FindProperty("isAutoFire");
-			m_timeBetweenShots = serializedObject.FindProperty("timeBetweenShots");
-			m_fireOnButtonDown = serializedObject.FindProperty("fireOnButtonDown");
-			m_fireButton = serializedObject.FindProperty("fireButton");
+			m_isContinuous = m_data.FindPropertyRelative("isContinuous");
+			m_isAutoFire = m_data.FindPropertyRelative("isAutoFire");
+			m_timeBetweenShots = m_data.FindPropertyRelative("timeBetweenShots");
+			m_fireOnButtonDown = m_data.FindPropertyRelative("fireOnButtonDown");
+			m_fireButton = m_data.FindPropertyRelative("fireButton");
 
 			// Burst Fire
-			m_isBurstFire = serializedObject.FindProperty("isBurstFire");
-			m_timeBetweenBursts = serializedObject.FindProperty("timeBetweenBursts");
-			m_shotsPerBurst = serializedObject.FindProperty("shotsPerBurst");
+			m_isBurstFire = m_data.FindPropertyRelative("isBurstFire");
+			m_timeBetweenBursts = m_data.FindPropertyRelative("timeBetweenBursts");
+			m_shotsPerBurst = m_data.FindPropertyRelative("shotsPerBurst");
 
 			// Events
-			m_onBeginFire = serializedObject.FindProperty("onBeginFire");
-			m_onShotFiring = serializedObject.FindProperty("onShotFiring");
-			m_onShotFired = serializedObject.FindProperty("onShotFired");
-			m_onDryFired = serializedObject.FindProperty("onDryFired");
-			m_onEndFire = serializedObject.FindProperty("onEndFire");
-
-			// Properties
-			m_shotsPerSecond = serializedObject.FindProperty("shotsPerSecond");
-			m_damagePerSecond = serializedObject.FindProperty("damagePerSecond");
+			m_onBeginFire = m_data.FindPropertyRelative("onBeginFire");
+			m_onShotFiring = m_data.FindPropertyRelative("onShotFiring");
+			m_onShotFired = m_data.FindPropertyRelative("onShotFired");
+			m_onDryFired = m_data.FindPropertyRelative("onDryFired");
+			m_onEndFire = m_data.FindPropertyRelative("onEndFire");
 		}
 
 		public override void OnInspectorGUI()
 		{
 			serializedObject.Update();
 
-			DrawBoxGroup(null, () =>
+			AresEditorUtility.DrawBoxGroup(null, () =>
 			{
 				EditorGUILayout.PropertyField(m_isPlayerControlled);
 			});
 
-			DrawBoxGroup("Controls", DrawControlsGUI);
-			DrawBoxGroup("Burst Fire", DrawBurstGUI);
-			DrawFoldoutGroup(ref m_showEvents, "Events", DrawEventsGUI);
+			AresEditorUtility.DrawBoxGroup("Controls", DrawControlsGUI);
+			AresEditorUtility.DrawBoxGroup("Burst Fire", DrawBurstGUI);
+			AresEditorUtility.DrawFoldoutGroup(ref m_showEvents, "Events", DrawEventsGUI);
 
 			EditorGUI.BeginDisabledGroup(true);
-			EditorGUILayout.FloatField("Shots Per Second", m_controller.shotsPerSecond);
-			EditorGUILayout.FloatField("Damage Per Second", m_controller.damagePerSecond);
+			EditorGUILayout.FloatField("Shots Per Second", m_controller.data.shotsPerSecond);
+			EditorGUILayout.FloatField("Damage Per Second", m_controller.data.damagePerSecond);
 			EditorGUI.EndDisabledGroup();
 
 			serializedObject.ApplyModifiedProperties();
@@ -97,7 +117,7 @@ namespace Ares
 			{
 				EditorGUILayout.PropertyField(m_isAutoFire);
 
-				if (m_isBurstFire.boolValue || m_controller.ammo == null || m_controller.ammo.useMagazine && m_controller.ammo.shotsPerMagazine > 1)
+				if (m_isBurstFire.boolValue || ammo == null || !ammo.useMagazine || ammo.shotsPerMagazine > 1)
 				{
 					if (m_timeBetweenShots.floatValue <= 0)
 					{
@@ -123,7 +143,7 @@ namespace Ares
 			EditorGUILayout.PropertyField(m_isBurstFire);
 			if (m_isBurstFire.boolValue)
 			{
-				if (m_controller.ammo == null || m_controller.ammo.useMagazine && m_controller.ammo.burstsPerMagazine > 1)
+				if (ammo == null || ammo.useMagazine && ammo.burstsPerMagazine > 1)
 				{
 					if (m_timeBetweenBursts.floatValue <= 0)
 					{

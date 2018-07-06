@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Ares;
+using Ares.Data;
 
-namespace Ares
+namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterAmmo))]
-	public class ShooterAmmoEditor : AresEditor
+	public class ShooterAmmoEditor : Editor
 	{
 		#region Variables
 
 		private ShooterAmmo m_ammo;
+		private SerializedProperty m_data;
 
 		// Basic
 		private SerializedProperty m_isInfinite;
@@ -41,38 +44,57 @@ namespace Ares
 
 		#endregion
 
+		#region Properties
+
+		private ShooterControllerData controller
+		{
+			get
+			{
+				if (m_ammo == null)
+					return null;
+
+				if (m_ammo.data.controller == null)
+					return null;
+
+				return m_ammo.data.controller.data;
+			}
+		}
+
+		#endregion
+
 		#region Methods
 
 		private void OnEnable()
 		{
 			m_ammo = (ShooterAmmo)target;
+			m_data = serializedObject.FindProperty("m_data");
 
 			// Basic
-			m_isInfinite = serializedObject.FindProperty("isInfinite");
-			m_capacity = serializedObject.FindProperty("capacity");
-			m_count = serializedObject.FindProperty("m_count");
+			m_isInfinite = m_data.FindPropertyRelative("isInfinite");
+			m_capacity = m_data.FindPropertyRelative("capacity");
+			m_count = m_data.FindPropertyRelative("m_count");
 
 			// Magazine
-			m_useMagazine = serializedObject.FindProperty("useMagazine");
-			m_magazineCapacity = serializedObject.FindProperty("magazineCapacity");
-			m_magazineCount = serializedObject.FindProperty("magazineCount");
-			m_shotsPerMagazine = serializedObject.FindProperty("shotsPerMagazine");
-			m_shotsInMagazine = serializedObject.FindProperty("m_shotsInMagazine");
-			m_isAutoReload = serializedObject.FindProperty("isAutoReload");
-			m_isSimultaneousReload = serializedObject.FindProperty("isSimultaneousReload");
-			m_reloadTime = serializedObject.FindProperty("reloadTime");
-			m_consecutiveReloadTime = serializedObject.FindProperty("consecutiveReloadTime");
-			m_reloadButton = serializedObject.FindProperty("reloadButton");
+			m_useMagazine = m_data.FindPropertyRelative("useMagazine");
+			m_magazineCapacity = m_data.FindPropertyRelative("magazineCapacity");
+			m_magazineCount = m_data.FindPropertyRelative("magazineCount");
+			m_shotsPerMagazine = m_data.FindPropertyRelative("shotsPerMagazine");
+			m_shotsInMagazine = m_data.FindPropertyRelative("m_shotsInMagazine");
+			m_isAutoReload = m_data.FindPropertyRelative("isAutoReload");
+			m_isSimultaneousReload = m_data.FindPropertyRelative("isSimultaneousReload");
+			m_reloadTime = m_data.FindPropertyRelative("reloadTime");
+			m_consecutiveReloadTime = m_data.FindPropertyRelative("consecutiveReloadTime");
+			m_reloadButton = m_data.FindPropertyRelative("reloadButton");
 
 			//Regeneration
-			m_useRegeneration = serializedObject.FindProperty("useRegeneration");
-			m_regenerationDelay = serializedObject.FindProperty("regenerationDelay");
-			m_regenerationRate = serializedObject.FindProperty("regenerationRate");
+			m_useRegeneration = m_data.FindPropertyRelative("useRegeneration");
+			m_regenerationDelay = m_data.FindPropertyRelative("regenerationDelay");
+			m_regenerationRate = m_data.FindPropertyRelative("regenerationRate");
 
 			// Events
-			m_onCountChanged = serializedObject.FindProperty("onCountChanged");
-			m_onBeginReload = serializedObject.FindProperty("onBeginReload");
-			m_onEndReload = serializedObject.FindProperty("onEndReload");
+			m_onCountChanged = m_data.FindPropertyRelative("onCountChanged");
+			m_onBeginReload = m_data.FindPropertyRelative("onBeginReload");
+			m_onEndReload = m_data.FindPropertyRelative("onEndReload");
 		}
 
 		public override void OnInspectorGUI()
@@ -84,7 +106,7 @@ namespace Ares
 				EditorGUILayout.HelpBox("If \"Is Infinite\" and \"Use Magazine\" are true and false respectively, then \"Shooter Ammo\" component is not required!", MessageType.Warning);
 			}
 
-			DrawBoxGroup(null, () =>
+			AresEditorUtility.DrawBoxGroup(null, () =>
 			{
 				EditorGUILayout.PropertyField(m_isInfinite);
 
@@ -96,7 +118,12 @@ namespace Ares
 						m_count.intValue = m_magazineCount.intValue * (m_shotsPerMagazine.intValue - 1) + m_shotsInMagazine.intValue;
 					}
 
-					m_capacity.intValue = Mathf.Max(m_capacity.intValue, 0);
+					if (m_capacity.intValue <= 0)
+					{
+						EditorGUILayout.HelpBox("\"Capacity\" must be greater than 0!", MessageType.Error);
+						m_capacity.intValue = 0;
+					}
+
 					m_count.intValue = Mathf.Clamp(m_count.intValue, 0, m_capacity.intValue);
 
 					EditorGUI.BeginDisabledGroup(m_useMagazine.boolValue);
@@ -106,7 +133,7 @@ namespace Ares
 				}
 			});
 
-			DrawBoxGroup("Magazine", () =>
+			AresEditorUtility.DrawBoxGroup("Magazine", () =>
 			{
 				EditorGUILayout.PropertyField(m_useMagazine);
 
@@ -122,9 +149,10 @@ namespace Ares
 
 					m_shotsInMagazine.intValue = Mathf.Clamp(m_shotsInMagazine.intValue, 0, m_shotsPerMagazine.intValue);
 
-					if (m_ammo.controller.isBurstFire
-						&& m_ammo.controller.shotsPerBurst > 0
-						&& m_shotsPerMagazine.intValue % m_ammo.controller.shotsPerBurst != 0)
+					if (controller != null
+						&& controller.isBurstFire
+						&& controller.shotsPerBurst > 0
+						&& m_shotsPerMagazine.intValue % controller.shotsPerBurst != 0)
 					{
 						EditorGUILayout.HelpBox("\"Shots Per Magazine\" is not divisible by \"Shots Per Burst\"!", MessageType.Error);
 					}
@@ -138,10 +166,10 @@ namespace Ares
 					EditorGUILayout.PropertyField(m_shotsPerMagazine);
 					EditorGUILayout.PropertyField(m_shotsInMagazine);
 
-					if (m_ammo.controller.isBurstFire)
+					if (controller != null && controller.isBurstFire)
 					{
 						EditorGUI.BeginDisabledGroup(true);
-						EditorGUILayout.FloatField("Bursts Per Magazine", m_ammo.burstsPerMagazine);
+						EditorGUILayout.FloatField("Bursts Per Magazine", m_ammo.data.burstsPerMagazine);
 						EditorGUI.EndDisabledGroup();
 					}
 
@@ -173,10 +201,10 @@ namespace Ares
 
 			if (!m_isInfinite.boolValue)
 			{
-				DrawBoxGroup("Regeneration", () =>
+				AresEditorUtility.DrawBoxGroup("Regeneration", () =>
 				{
 					EditorGUILayout.PropertyField(m_useRegeneration);
-					
+
 					if (m_useRegeneration.boolValue)
 					{
 						m_regenerationDelay.floatValue = Mathf.Max(m_regenerationDelay.floatValue, 0f);
@@ -188,7 +216,7 @@ namespace Ares
 				});
 			}
 
-			DrawFoldoutGroup(ref m_showEvents, "Events", () =>
+			AresEditorUtility.DrawFoldoutGroup(ref m_showEvents, "Events", () =>
 			{
 				EditorGUILayout.PropertyField(m_onCountChanged);
 

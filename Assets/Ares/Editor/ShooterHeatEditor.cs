@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Ares;
 
-namespace Ares
+namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterHeat))]
-	public class ShooterHeatEditor : AresEditor
+	public class ShooterHeatEditor : Editor
 	{
 		#region Variables
 
 		private ShooterHeat m_heat;
+		private SerializedProperty m_data;
 
 		// Basic
 		private SerializedProperty m_maxHeat;
@@ -33,29 +35,32 @@ namespace Ares
 
 		private void OnEnable()
 		{
+			m_heat = (ShooterHeat)target;
+			m_data = serializedObject.FindProperty("m_data");
+
 			// Basic
-			m_maxHeat = serializedObject.FindProperty("maxHeat");
-			m_heatPerShot = serializedObject.FindProperty("heatPerShot");
+			m_maxHeat = m_data.FindPropertyRelative("maxHeat");
+			m_heatPerShot = m_data.FindPropertyRelative("heatPerShot");
 
 			// Cooldown
-			m_cooldownDelay = serializedObject.FindProperty("cooldownDelay");
-			m_cooldownRate = serializedObject.FindProperty("cooldownRate");
+			m_cooldownDelay = m_data.FindPropertyRelative("cooldownDelay");
+			m_cooldownRate = m_data.FindPropertyRelative("cooldownRate");
 
 			// Overheat
-			m_overheatDelay = serializedObject.FindProperty("overheatDelay");
-			m_overheatRate = serializedObject.FindProperty("overheatRate");
+			m_overheatDelay = m_data.FindPropertyRelative("overheatDelay");
+			m_overheatRate = m_data.FindPropertyRelative("overheatRate");
 
 			// Events
-			m_onHeatChanged = serializedObject.FindProperty("onHeatChanged");
-			m_onBeginOverheat = serializedObject.FindProperty("onBeginOverheat");
-			m_onEndOverheat = serializedObject.FindProperty("onEndOverheat");
+			m_onHeatChanged = m_data.FindPropertyRelative("onHeatChanged");
+			m_onBeginOverheat = m_data.FindPropertyRelative("onBeginOverheat");
+			m_onEndOverheat = m_data.FindPropertyRelative("onEndOverheat");
 		}
 
 		public override void OnInspectorGUI()
 		{
 			serializedObject.Update();
 
-			DrawBoxGroup(null, () =>
+			AresEditorUtility.DrawBoxGroup(null, () =>
 			{
 				if (m_maxHeat.floatValue <= 0f)
 				{
@@ -74,7 +79,7 @@ namespace Ares
 				EditorGUILayout.PropertyField(m_heatPerShot);
 			});
 
-			DrawBoxGroup("Cooldown", () =>
+			AresEditorUtility.DrawBoxGroup("Cooldown", () =>
 			{
 				m_cooldownDelay.floatValue = Mathf.Max(m_cooldownDelay.floatValue, 0f);
 				EditorGUILayout.PropertyField(m_cooldownDelay);
@@ -83,7 +88,7 @@ namespace Ares
 				EditorGUILayout.PropertyField(m_cooldownRate);
 			});
 
-			DrawBoxGroup("Overheat", () =>
+			AresEditorUtility.DrawBoxGroup("Overheat", () =>
 			{
 				m_overheatDelay.floatValue = Mathf.Max(m_overheatDelay.floatValue, 0f);
 				EditorGUILayout.PropertyField(m_overheatDelay);

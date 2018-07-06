@@ -1,16 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Ares.Data;
 
-public class ProjectileShooter : MonoBehaviour {
+namespace Ares
+{
+	[RequireComponent(typeof(ShooterController))]
+	public class ProjectileShooter : AresMonoBehaviour<ProjectileShooterData>, IShooter<ProjectileShooterData>, IShooter
+	{
+		#region Variables
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		public Projectile projectileTemplate;
+
+		#endregion
+
+		#region Properties
+
+		public ShooterData shooterData
+		{
+			get { return data; }
+		} 
+
+		#endregion
+
+		#region Methods
+
+		protected override void Reset()
+		{
+			data = new ProjectileShooterData(this);
+		}
+
+		#endregion
 	}
 }

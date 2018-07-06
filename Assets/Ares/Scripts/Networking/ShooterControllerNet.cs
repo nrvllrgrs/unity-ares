@@ -1,12 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using Ares.Data;
 
 namespace Ares.Networking
 {
-	public class ShooterControllerNet : NetworkBehaviour
-	{
+	//public class ShooterControllerNet : AresNetworkBehaviour<ShooterControllerData>, IShooterController
+	//{
+	//	#region Methods
 
-	}
+	//	protected override void Reset()
+	//	{
+	//		data = new ShooterControllerData(this);
+	//	}
+
+	//	private void Update()
+	//	{
+	//		if (!hasAuthority)
+	//			return;
+
+	//		data.Tick();
+	//	}
+
+	//	#endregion
+
+	//	#region Commands
+
+
+
+	//	#endregion
+
+	//	#region Rpc
+
+
+
+	//	#endregion
+	//}
 }
