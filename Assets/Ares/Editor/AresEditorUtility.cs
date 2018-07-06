@@ -74,22 +74,20 @@ namespace AresEditor
 					var impulse = damageInfo.FindPropertyRelative(string.Format("{0}Impulse", prefix));
 					impulse.floatValue = Mathf.Max(impulse.floatValue, 0f);
 					EditorGUILayout.PropertyField(impulse, new GUIContent("Impulse"));
+				}
 
-					var range = damageInfo.FindPropertyRelative(string.Format("{0}Range", prefix));
+				var range = damageInfo.FindPropertyRelative(string.Format("{0}Range", prefix));
+				if (range.floatValue == 0f)
+				{
+					EditorGUILayout.HelpBox("\"Range\" is infinite.", MessageType.Info);
+				}
+				range.floatValue = Mathf.Max(range.floatValue, 0f);
+				EditorGUILayout.PropertyField(range, new GUIContent("Range"));
 
-					if (range.floatValue == 0f)
-					{
-						EditorGUILayout.HelpBox("\"Range\" is infinite.", MessageType.Info);
-					}
-
-					range.floatValue = Mathf.Max(range.floatValue, 0f);
-					EditorGUILayout.PropertyField(range, new GUIContent("Range"));
-
-					if (range.floatValue > 0f)
-					{
-						var falloff = damageInfo.FindPropertyRelative(string.Format("{0}Falloff", prefix));
-						EditorGUILayout.PropertyField(falloff, new GUIContent("Falloff"));
-					}
+				if (damage.floatValue > 0f && range.floatValue > 0f)
+				{
+					var falloff = damageInfo.FindPropertyRelative(string.Format("{0}Falloff", prefix));
+					EditorGUILayout.PropertyField(falloff, new GUIContent("Falloff"));
 				}
 			});
 		}

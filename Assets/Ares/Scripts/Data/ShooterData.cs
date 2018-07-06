@@ -7,10 +7,22 @@ namespace Ares.Data
 	{
 		#region Variables
 
+		/// <summary>
+		/// Position and rotation of shot origin
+		/// </summary>
+		[Tooltip("Position and rotation of shot origin")]
 		public Transform muzzleBone;
 
-		// Audio
+		/// <summary>
+		/// Shot-fired audio clip
+		/// </summary>
+		[Tooltip("Shot-fired audio clip")]
 		public AudioClip clip;
+
+		/// <summary>
+		/// Shot-fired audio clip volume
+		/// </summary>
+		[Tooltip("Shot-fired audio clip volume")]
 		public float volume = 1f;
 
 		// TODO: Do NOT spawn raw VFX

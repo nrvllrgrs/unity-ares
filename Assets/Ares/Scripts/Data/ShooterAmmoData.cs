@@ -78,9 +78,9 @@ namespace Ares.Data
 		public float reloadTime;
 
 		/// <summary>
-		/// Seconds to reload
+		/// Seconds to reload consecutive shots
 		/// </summary>
-		[Tooltip("Seconds to reload")]
+		[Tooltip("Seconds to reload consecutive shots")]
 		public float consecutiveReloadTime;
 
 		/// <summary>

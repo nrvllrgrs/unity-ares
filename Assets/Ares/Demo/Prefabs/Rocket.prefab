@@ -117,7 +117,7 @@ MonoBehaviour:
     damage:
       impactDamage: 0
       impactImpulse: 0
-      impactRange: 0
+      impactRange: 1000
       impactFalloff:
         serializedVersion: 2
         m_Curve: []
