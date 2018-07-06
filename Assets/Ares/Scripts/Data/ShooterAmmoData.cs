@@ -12,83 +12,99 @@ namespace Ares.Data
 		/// <summary>
 		/// Indicates whether there is no upper-bound to the number of carried shots
 		/// </summary>
+		[Tooltip("Indicates whether there is no upper-bound to the number of carried shots")]
 		public bool isInfinite;
 
 		/// <summary>
 		/// Maximum number of shots that can be carried
 		/// </summary>
+		[Tooltip("Maximum number of shots that can be carried")]
 		public int capacity;
 
-		[SerializeField]
 		/// <summary>
 		/// Number of shots currently carried
 		/// </summary>
+		[SerializeField]
+		[Tooltip("Number of shots currently carried")]
 		private int m_count;
 
 		/// <summary>
 		/// Indicates whether weapon uses a magazine
 		/// </summary>
+		[Tooltip("Indicates whether weapon uses a magazine")]
 		public bool useMagazine;
 
 		/// <summary>
 		/// Maximum number of magazines that can be carried
 		/// </summary>
+		[Tooltip("Maximum number of magazines that can be carried")]
 		public int magazineCapacity;
 
 		/// <summary>
 		/// Number of magazines currently carried
 		/// </summary>
+		[Tooltip("Number of magazines currently carried")]
 		public int magazineCount;
 
 		/// <summary>
 		/// Number of shots per magazine
 		/// </summary>
+		[Tooltip("Number of shots per magazine")]
 		public int shotsPerMagazine;
 
-		[SerializeField]
 		/// <summary>
 		/// Number of shots currently in magazine
 		/// </summary>
+		[SerializeField]
+		[Tooltip("Number of shots currently in magazine")]
 		private int m_shotsInMagazine;
 
 		/// <summary>
 		/// Indicates whether shooter is automatically reloaded
 		/// </summary>
+		[Tooltip("Indicates whether shooter is automatically reloaded")]
 		public bool isAutoReload;
 
 		/// <summary>
 		/// Indicates whether all shots in magazine are reloaded simultaneously
 		/// </summary>
+		[Tooltip("Indicates whether all shots in magazine are reloaded simultaneously")]
 		public bool isSimultaneousReload = true;
 
 		/// <summary>
 		/// Seconds to reload
 		/// </summary>
+		[Tooltip("Seconds to reload")]
 		public float reloadTime;
 
 		/// <summary>
 		/// Seconds to reload
 		/// </summary>
+		[Tooltip("Seconds to reload")]
 		public float consecutiveReloadTime;
 
 		/// <summary>
 		/// Name of Reload button
 		/// </summary>
+		[Tooltip("Name of Reload button")]
 		public string reloadButton = "Reload";
 
 		/// <summary>
 		/// Indicates whether ammo can regenerate
 		/// </summary>
+		[Tooltip("Indicates whether ammo can regenerate")]
 		public bool useRegeneration;
 
 		/// <summary>
 		/// Seconds to wait before regeneration begins
 		/// </summary>
+		[Tooltip("Seconds to wait before regeneration begins")]
 		public float regenerationDelay;
 
 		/// <summary>
 		/// Number of ammo regenerated per second
 		/// </summary>
+		[Tooltip("Number of ammo regenerated per second")]
 		public float regenerationRate;
 
 		// TODO: Shots consumed per "Fire"

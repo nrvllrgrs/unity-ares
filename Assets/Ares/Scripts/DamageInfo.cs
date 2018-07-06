@@ -7,9 +7,10 @@ namespace Ares
 	{
 		#region Variables
 
+		[Tooltip("Amount of damage dealt upon impact")]
 		public float impactDamage;
 
-		// Damage type
+		// TODO: Damage type
 
 		public float impactImpulse;
 		public float impactRange;
@@ -17,7 +18,7 @@ namespace Ares
 
 		public float splashDamage;
 
-		// Damage type
+		// TODO: Damage type
 
 		public float splashImpulse;
 		public float splashRange;

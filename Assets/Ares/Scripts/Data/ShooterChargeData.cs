@@ -11,11 +11,13 @@ namespace Ares.Data
 		/// <summary>
 		/// Seconds before controller can shoot
 		/// </summary>
+		[Tooltip("Seconds before controller can shoot")]
 		public float maxCharge;
 
 		/// <summary>
 		/// Indicates whether charge is reset when "Fire" ends (otherwise, value charges down)
 		/// </summary>
+		[Tooltip("Indicates whether charge is reset when \"Fire\" ends (otherwise, value charges down)")]
 		public bool resetOnEndFire;
 
 		// TODO: Add functionality to fire on partial charge (similar to Plasma Pistol in Halo)

@@ -13,46 +13,55 @@ namespace Ares.Data
 		/// <summary>
 		/// Indicates whether player controls this controller
 		/// </summary>
+		[Tooltip("Indicates whether player controls this controller")]
 		public bool isPlayerControlled;
 
 		/// <summary>
 		/// Indicates whether "Fire" action triggers every frame
 		/// </summary>
+		[Tooltip("Indicates whether \"Fire\" action triggers every frame")]
 		public bool isContinuous = false;
 
 		/// <summary>
 		/// Indicates whether "Fire" action automatically triggers on button down
 		/// </summary>
+		[Tooltip("Indicates whether \"Fire\" action automatically triggers on button down")]
 		public bool isAutoFire = false;
 
 		/// <summary>
 		/// Seconds between shots
 		/// </summary>
+		[Tooltip("Seconds between shots")]
 		public float timeBetweenShots;
 
 		/// <summary>
 		/// Indicates whether "Fire" action occurs on button down
 		/// </summary>
+		[Tooltip("Indicates whether \"Fire\" action occurs on button down")]
 		public bool fireOnButtonDown = true;
 
 		/// <summary>
 		/// Name of Fire button
 		/// </summary>
+		[Tooltip("Name of Fire button")]
 		public string fireButton = "Fire1";
 
 		/// <summary>
 		/// Indicates whether "Fire" action triggers multiple shots
 		/// </summary>
+		[Tooltip("Indicates whether \"Fire\" action triggers multiple shots")]
 		public bool isBurstFire = false;
 
 		/// <summary>
 		/// Seconds between bursts
 		/// </summary>
+		[Tooltip("Seconds between bursts")]
 		public float timeBetweenBursts;
 
 		/// <summary>
 		/// Number of shots per burst
 		/// </summary>
+		[Tooltip("Number of shots per burst")]
 		public int shotsPerBurst;
 
 		private bool m_isFiring;

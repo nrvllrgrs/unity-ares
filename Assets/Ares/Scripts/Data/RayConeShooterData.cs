@@ -10,16 +10,19 @@ namespace Ares.Data
 		/// <summary>
 		/// Number of rays
 		/// </summary>
+		[Tooltip("Number of rays")]
 		public int count;
 
 		/// <summary>
 		/// Maximum angle rays from forward (in degrees)
 		/// </summary>
+		[Tooltip("Maximum angle rays from forward (in degrees)")]
 		public float maxAngle;
 
 		/// <summary>
 		/// Indicates whether rays use normal distribution
 		/// </summary>
+		[Tooltip("Indicates whether rays use normal distribution")]
 		public bool isNormalDistribution;
 
 		#endregion

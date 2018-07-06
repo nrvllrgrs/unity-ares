@@ -7,8 +7,7 @@ namespace Ares.Data
 	{
 		#region Variables
 
-		// TODO: Ought to be an IProjectile, for networking???
-		public Projectile projectileTemplate;
+		public IProjectile projectileTemplate;
 
 		// Controls
 		public bool spawnOnBeginFire;

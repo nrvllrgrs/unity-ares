@@ -9,13 +9,39 @@ namespace Ares.Data
 	{
 		#region Variables
 
+		/// <summary>
+		/// Maximum allowed heat before overheating
+		/// </summary>
+		[Tooltip("Maximum allowed heat before overheating")]
 		public float maxHeat;
+
+		/// <summary>
+		/// Heat per shot
+		/// </summary>
 		public float heatPerShot;
 
+		/// <summary>
+		/// Seconds to wait before heat loss begins while not overheated
+		/// </summary>
+		[Tooltip("Seconds to wait before heat loss begins while not overheated")]
 		public float cooldownDelay;
+
+		/// <summary>
+		/// Heat loss per second while not overheated
+		/// </summary>
+		[Tooltip("Heat loss per second while not overheated")]
 		public float cooldownRate;
 
+		/// <summary>
+		/// Seconds to wait before heat loss begins while overheated
+		/// </summary>
+		[Tooltip("Seconds to wait before heat loss begins while overheated")]
 		public float overheatDelay;
+
+		/// <summary>
+		/// Heat loss per second while overheated
+		/// </summary>
+		[Tooltip("Heat loss per second while overheated")]
 		public float overheatRate;
 
 		private float m_heat;

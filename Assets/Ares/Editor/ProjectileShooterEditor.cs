@@ -12,8 +12,6 @@ namespace AresEditor
 		private ProjectileShooter m_shooter;
 		private SerializedProperty m_projectileTemplate;
 
-		private SerializedProperty m_relProjectileTemplate;
-
 		// Controls
 		private SerializedProperty m_spawnOnBeginFire;
 
@@ -32,7 +30,6 @@ namespace AresEditor
 			m_shooter = (ProjectileShooter)target;
 			m_projectileTemplate = serializedObject.FindProperty("projectileTemplate");
 
-			m_relProjectileTemplate = m_data.FindPropertyRelative("projectileTemplate");
 			m_canTrack = m_data.FindPropertyRelative("canTrack");
 			m_maxLockTime = m_data.FindPropertyRelative("maxLockTime");
 		}
@@ -47,7 +44,7 @@ namespace AresEditor
 			}
 
 			EditorGUILayout.PropertyField(m_projectileTemplate);
-			m_relProjectileTemplate.objectReferenceValue = m_projectileTemplate.objectReferenceValue;
+			m_shooter.data.projectileTemplate = m_projectileTemplate.objectReferenceValue as IProjectile;
 		}
 
 		public override void OnInspectorGUI()
