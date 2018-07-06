@@ -64,6 +64,11 @@ namespace Ares
 			data = new ProjectileData(this);
 		}
 
+		public void Detonate()
+		{
+			data.Detonate();
+		}
+
 		#endregion
 	}
 }

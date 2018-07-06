@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1401956388217942}
+  m_IsPrefabParent: 1
+--- !u!1 &1401956388217942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4199557939290022}
+  - component: {fileID: 114661953232876328}
+  - component: {fileID: 114659242148236120}
+  - component: {fileID: 114909959153489268}
+  m_Layer: 0
+  m_Name: Grenade Launcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4199557939290022
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401956388217942}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114659242148236120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401956388217942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33357879c9f25b4d880b39023e7c31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_data:
+    m_owner: {fileID: 114659242148236120}
+    muzzleBone: {fileID: 0}
+    clip: {fileID: 0}
+    volume: 1
+    projectileTemplate: {fileID: 114429777347818184, guid: 827366de66d203246bf581477c427cd2,
+      type: 2}
+    spawnOnBeginFire: 0
+    canTrack: 0
+    maxLockTime: 0
+  projectileTemplate: {fileID: 114429777347818184, guid: 827366de66d203246bf581477c427cd2,
+    type: 2}
+--- !u!114 &114661953232876328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401956388217942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6531b76fa7db3554f8813021f45b2a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_data:
+    m_owner: {fileID: 114661953232876328}
+    isPlayerControlled: 0
+    isContinuous: 0
+    isAutoFire: 1
+    timeBetweenShots: 0.6
+    fireOnButtonDown: 1
+    fireButton: Fire1
+    isBurstFire: 0
+    timeBetweenBursts: 0
+    shotsPerBurst: 0
+    onBeginFire:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onShotFiring:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onShotFired:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onDryFired:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onEndFire:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+--- !u!114 &114909959153489268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401956388217942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38380ccf4233084eb63cfd41733400a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_data:
+    m_owner: {fileID: 114909959153489268}
+    isInfinite: 0
+    capacity: 16
+    m_count: 16
+    useMagazine: 1
+    magazineCapacity: 4
+    magazineCount: 4
+    shotsPerMagazine: 4
+    m_shotsInMagazine: 4
+    isAutoReload: 1
+    isSimultaneousReload: 0
+    reloadTime: 1.24
+    consecutiveReloadTime: 0.6
+    reloadButton: Reload
+    useRegeneration: 0
+    regenerationDelay: 0
+    regenerationRate: 0
+    onCountChanged:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onBeginReload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    onEndReload:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
