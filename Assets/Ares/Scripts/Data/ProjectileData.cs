@@ -32,8 +32,15 @@ namespace Ares.Data
 
 		public IProjectile projectile
 		{
-			get { return m_projectile; }
-			private set { m_projectile = value; }
+			get
+			{
+				if (m_projectile == null)
+				{
+					m_projectile = (IProjectile)owner;
+				}
+				return m_projectile;
+			}
+			set { m_projectile = value; }
 		}
 
 		#endregion
@@ -53,6 +60,12 @@ namespace Ares.Data
 		public override void Initialize()
 		{
 			m_prevPosition = owner.transform.position;
+
+			if (projectile == null)
+			{
+				Debug.LogError(string.Format("Projectile is undefined for {0}!", owner.name));
+				return;
+			}
 			projectile.collisionCallback.onCollisionEnter.AddListener(OnImpact);
 		}
 

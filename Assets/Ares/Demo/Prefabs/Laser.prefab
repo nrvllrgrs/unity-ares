@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114353518188558662}
     maxHeat: 6
     heatPerShot: 1
     cooldownDelay: 0.6
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114531599069918308}
     muzzleBone: {fileID: 0}
     clip: {fileID: 0}
     volume: 1

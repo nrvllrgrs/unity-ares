@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using Ares.Data;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Ares
 {
 	public abstract class AresMonoBehaviour<T> : MonoBehaviour
@@ -32,6 +36,17 @@ namespace Ares
 			data.Initialize();
 		}
 
+		#endregion
+
+		#region Editor Methods
+#if UNITY_EDITOR
+
+		protected virtual void ResetOwner()
+		{
+			data.owner = this;
+		}
+
+#endif
 		#endregion
 	}
 }

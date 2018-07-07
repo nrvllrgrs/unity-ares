@@ -18,5 +18,17 @@ namespace Ares
 		}
 
 		#endregion
+
+		#region Editor Methods
+#if UNITY_EDITOR
+
+		[ContextMenu("Reset Owner")]
+		protected override void ResetOwner()
+		{
+			base.ResetOwner();
+		}
+
+#endif
+		#endregion
 	}
 }

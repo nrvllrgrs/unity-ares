@@ -44,7 +44,7 @@ namespace AresEditor
 			}
 
 			EditorGUILayout.PropertyField(m_projectileTemplate);
-			m_shooter.data.projectileTemplate = m_projectileTemplate.objectReferenceValue as IProjectile;
+			m_shooter.data.projectileTemplate = (IProjectile)m_projectileTemplate.objectReferenceValue;
 		}
 
 		public override void OnInspectorGUI()

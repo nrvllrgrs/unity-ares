@@ -19,7 +19,7 @@ namespace Ares.Data
 		public MonoBehaviour owner
 		{
 			get { return m_owner; }
-			private set { m_owner = value; }
+			set { m_owner = value; }
 		}
 
 		#endregion

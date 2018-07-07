@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114288315001083126}
     isInfinite: 0
     capacity: 75
     m_count: 75
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114587943997455884}
     muzzleBone: {fileID: 0}
     clip: {fileID: 0}
     volume: 1

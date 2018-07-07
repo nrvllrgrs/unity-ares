@@ -24,7 +24,8 @@ GameObject:
   - component: {fileID: 135546400857804746}
   - component: {fileID: 54152895891714646}
   - component: {fileID: 114013104884093882}
-  m_Layer: 0
+  - component: {fileID: 114653061385169526}
+  m_Layer: 8
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +160,32 @@ MonoBehaviour:
     maxSpeed: 0
     target: {fileID: 0}
     angularSpeed: 0
+--- !u!114 &114653061385169526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1983064349773250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7897d331d76b7ed42a60b03f742a8b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCollisionEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Ares.Events.CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onCollisionStay:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Ares.Events.CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onCollisionExit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Ares.Events.CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!135 &135546400857804746
 SphereCollider:
   m_ObjectHideFlags: 1

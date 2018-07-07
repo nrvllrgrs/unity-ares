@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114025269174800940}
     muzzleBone: {fileID: 0}
     clip: {fileID: 0}
     volume: 1
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114417422309931932}
     isInfinite: 0
     capacity: 200
     m_count: 200
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_data:
-    m_owner: {fileID: 0}
+    m_owner: {fileID: 114503046302016708}
     maxCharge: 0.87
     resetOnEndFire: 0
 --- !u!114 &114880095826994234

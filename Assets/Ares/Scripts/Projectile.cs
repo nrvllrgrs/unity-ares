@@ -62,6 +62,7 @@ namespace Ares
 		protected override void Reset()
 		{
 			data = new ProjectileData(this);
+			data.projectile = this;
 		}
 
 		public void Detonate()
@@ -70,5 +71,18 @@ namespace Ares
 		}
 
 		#endregion
+
+		#region Editor Methods
+#if UNITY_EDITOR
+
+		[ContextMenu("Reset Owner")]
+		protected override void ResetOwner()
+		{
+			base.ResetOwner();
+			data.projectile = this;
+		}
+
+#endif
+	#endregion
 	}
 }
