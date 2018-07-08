@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ProjectileShooterData : ShooterData
+	public class ProjectileShooterData : ShooterData, ICopyable<ProjectileShooterData>
 	{
 		#region Variables
 
@@ -55,6 +55,15 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ProjectileShooterData other)
+		{
+			base.CopyTo(other);
+
+			other.spawnOnBeginFire = spawnOnBeginFire;
+			other.canTrack = canTrack;
+			other.maxLockTime = maxLockTime;
+		}
 
 		public override void Initialize()
 		{

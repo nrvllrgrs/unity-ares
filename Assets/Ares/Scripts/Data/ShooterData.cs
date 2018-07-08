@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public abstract class ShooterData : AresData
+	public abstract class ShooterData : AresData, ICopyable<ShooterData>
 	{
 		#region Variables
 
@@ -71,6 +71,13 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ShooterData other)
+		{
+			other.muzzleBone = muzzleBone;
+			other.clip = clip;
+			other.volume = volume;
+		}
 
 		public override void Initialize()
 		{

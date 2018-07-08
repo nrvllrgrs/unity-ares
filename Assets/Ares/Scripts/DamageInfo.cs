@@ -3,7 +3,7 @@
 namespace Ares
 {
 	[System.Serializable]
-	public class DamageInfo
+	public class DamageInfo : ICopyable<DamageInfo>
 	{
 		#region Variables
 
@@ -43,6 +43,19 @@ namespace Ares
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(DamageInfo other)
+		{
+			other.impactDamage = impactDamage;
+			other.impactImpulse = impactImpulse;
+			other.impactRange = impactRange;
+			other.impactFalloff = impactFalloff;
+
+			other.splashDamage = splashDamage;
+			other.splashImpulse = splashImpulse;
+			other.splashRange = splashRange;
+			other.splashFalloff = splashFalloff;
+		}
 
 		public void ApplyDamage(GameObject victim, Vector3 origin, Vector3 contact, Vector3 normal)
 		{

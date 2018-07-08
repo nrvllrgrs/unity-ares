@@ -42,18 +42,9 @@ namespace Ares.Data
 
 		public void CopyTo(RayShooterData other)
 		{
-			other.clip = clip;
-			other.volume = volume;
+			base.CopyTo(other);
 
-			other.damage.impactDamage = damage.impactDamage;
-			other.damage.impactImpulse = damage.impactImpulse;
-			other.damage.impactRange = damage.impactRange;
-			other.damage.impactFalloff = damage.impactFalloff;
-
-			other.damage.splashDamage = damage.splashDamage;
-			other.damage.splashImpulse = damage.splashImpulse;
-			other.damage.splashRange = damage.splashRange;
-			other.damage.splashFalloff = damage.splashFalloff;
+			damage.CopyTo(other.damage);
 		}
 
 		public override void Fire()

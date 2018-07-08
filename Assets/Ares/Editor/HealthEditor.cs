@@ -61,7 +61,6 @@ namespace AresEditor
 
 		protected virtual void OnEnable()
 		{
-			m_health = (Health)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			m_maxPoints = m_data.FindPropertyRelative("maxHealth");

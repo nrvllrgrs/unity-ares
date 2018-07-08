@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ProjectileData : AresData
+	public class ProjectileData : AresData, ICopyable<ProjectileData>
 	{
 		#region Variables
 
@@ -56,6 +56,22 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ProjectileData other)
+		{
+			if (other.damage == null)
+			{
+				other.damage = new DamageInfo();
+			}
+
+			damage.CopyTo(other.damage);
+
+			other.speed = speed;
+			other.acceleration = acceleration;
+			other.maxSpeed = maxSpeed;
+			other.target = target;
+			other.angularSpeed = angularSpeed;
+		}
 
 		public override void Initialize()
 		{

@@ -27,7 +27,7 @@ namespace AresEditor
 				ConvertToNetworkBehaviour<ShooterCharge, ShooterChargeNet, ShooterChargeData>(dst);
 				ConvertToNetworkBehaviour<ShooterHeat, ShooterHeatNet, ShooterHeatData>(dst);
 				ConvertToNetworkBehaviour<RayShooter, RayShooterNet, RayShooterData>(dst);
-				ConvertToNetworkBehaviour<RayConeShooter, RayConeShooterNet, BeamShooterData>(dst);
+				ConvertToNetworkBehaviour<RayConeShooter, RayConeShooterNet, RayConeShooterData>(dst);
 				ConvertToNetworkBehaviour<BeamShooter, BeamShooterNet, BeamShooterData>(dst);
 				ConvertToNetworkBehaviour<ProjectileShooter, ProjectileShooterNet, ProjectileShooterData>(dst);
 				ConvertToNetworkBehaviour<Projectile, ProjectileNet, ProjectileData>(dst);

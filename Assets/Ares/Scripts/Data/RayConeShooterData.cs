@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class RayConeShooterData : RayShooterData, ICopyable<RayShooterData>
+	public class RayConeShooterData : RayShooterData, ICopyable<RayConeShooterData>
 	{
 		#region Variables
 

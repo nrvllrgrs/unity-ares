@@ -8,7 +8,7 @@ namespace Ares.Data
 	{ }
 
 	[System.Serializable]
-	public class HealthData : AresData
+	public class HealthData : AresData, ICopyable<HealthData>
 	{
 		#region Variables
 
@@ -78,6 +78,16 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(HealthData other)
+		{
+			other.maxHealth = maxHealth;
+			other.health = health;
+			other.destroyOnKilled = destroyOnKilled;
+			other.regenerationDelay = regenerationDelay;
+			other.regenerationRate = regenerationRate;
+			other.invulnerabilityTime = invulnerabilityTime;
+		}
 
 		public void Damage(DamageActionInfo info)
 		{
