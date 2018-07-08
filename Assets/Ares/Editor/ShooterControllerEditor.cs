@@ -2,42 +2,66 @@
 using UnityEditor;
 using Ares;
 using Ares.Data;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterController))]
-	public class ShooterControllerEditor : Editor
+	public class ShooterControllerEditor : ShooterControllerDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_controller = (ShooterController)target;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ShooterControllerNet))]
+	public class ShooterControllerNetEditor : ShooterControllerDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_controller = (ShooterControllerNet)target;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ShooterControllerDataEditor : Editor
 	{
 		#region Variables
 
-		private ShooterController m_controller;
-		private SerializedProperty m_data;
+		protected IShooterController m_controller;
+		protected SerializedProperty m_data;
 
-		private SerializedProperty m_isPlayerControlled;
+		protected SerializedProperty m_isPlayerControlled;
 
 		// Controls
-		private SerializedProperty m_isContinuous;
-		private SerializedProperty m_isAutoFire;
-		private SerializedProperty m_timeBetweenShots;
-		private SerializedProperty m_fireOnButtonDown;
-		private SerializedProperty m_fireButton;
+		protected SerializedProperty m_isContinuous;
+		protected SerializedProperty m_isAutoFire;
+		protected SerializedProperty m_timeBetweenShots;
+		protected SerializedProperty m_fireOnButtonDown;
+		protected SerializedProperty m_fireButton;
 
 		// Burst Fire
-		private SerializedProperty m_isBurstFire;
-		private SerializedProperty m_timeBetweenBursts;
-		private SerializedProperty m_shotsPerBurst;
+		protected SerializedProperty m_isBurstFire;
+		protected SerializedProperty m_timeBetweenBursts;
+		protected SerializedProperty m_shotsPerBurst;
 
 		// Events
-		private bool m_showEvents = false;
-		private SerializedProperty m_onBeginFire;
-		private SerializedProperty m_onShotFiring;
-		private SerializedProperty m_onShotFired;
-		private SerializedProperty m_onDryFired;
-		private SerializedProperty m_onEndFire;
-
-		// Derived
-		private SerializedProperty m_shotsPerSecond;
-		private SerializedProperty m_damagePerSecond;
+		protected bool m_showEvents = false;
+		protected SerializedProperty m_onBeginFire;
+		protected SerializedProperty m_onShotFiring;
+		protected SerializedProperty m_onShotFired;
+		protected SerializedProperty m_onDryFired;
+		protected SerializedProperty m_onEndFire;
 
 		#endregion
 
@@ -61,9 +85,8 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
-			m_controller = (ShooterController)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			m_isPlayerControlled = m_data.FindPropertyRelative("isPlayerControlled");

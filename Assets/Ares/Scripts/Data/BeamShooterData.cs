@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class BeamShooterData : RayShooterData
+	public class BeamShooterData : RayShooterData, ICopyable<RayShooterData>
 	{
 		#region Variables
 
@@ -26,6 +26,15 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(BeamShooterData other)
+		{
+			base.CopyTo(other);
+
+			other.beamTemplate = beamTemplate;
+			other.endBeamTemplate = endBeamTemplate;
+			other.spawnOnShotFired = spawnOnShotFired;
+		}
 
 		public override void Initialize()
 		{

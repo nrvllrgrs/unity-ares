@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class RayConeShooterData : RayShooterData
+	public class RayConeShooterData : RayShooterData, ICopyable<RayShooterData>
 	{
 		#region Variables
 
@@ -45,6 +45,15 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(RayConeShooterData other)
+		{
+			base.CopyTo(other);
+
+			other.count = count;
+			other.maxAngle = maxAngle;
+			other.isNormalDistribution = isNormalDistribution;
+		}
 
 		public override void Fire()
 		{

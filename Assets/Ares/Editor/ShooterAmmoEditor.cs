@@ -2,15 +2,43 @@
 using UnityEditor;
 using Ares;
 using Ares.Data;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterAmmo))]
-	public class ShooterAmmoEditor : Editor
+	public class ShooterAmmoEditor : ShooterAmmoDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_ammo = (ShooterAmmo)target;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ShooterAmmoNet))]
+	public class ShooterAmmoNetEditor : ShooterAmmoDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_ammo = (ShooterAmmoNet)target;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ShooterAmmoDataEditor : Editor
 	{
 		#region Variables
 
-		private ShooterAmmo m_ammo;
+		protected IShooterAmmo m_ammo;
 		private SerializedProperty m_data;
 
 		// Basic
@@ -64,9 +92,8 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
-			m_ammo = (ShooterAmmo)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			// Basic

@@ -1,15 +1,43 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterHeat))]
-	public class ShooterHeatEditor : Editor
+	public class ShooterHeatEditor : ShooterHeatDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_heat = target as ShooterHeat;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ShooterHeatNet))]
+	public class ShooterHeatNetEditor : ShooterHeatDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_heat = target as ShooterHeatNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ShooterHeatDataEditor : Editor
 	{
 		#region Variables
 
-		private ShooterHeat m_heat;
+		protected IShooterHeat m_heat;
 		private SerializedProperty m_data;
 
 		// Basic
@@ -33,9 +61,8 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
-			m_heat = (ShooterHeat)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			// Basic

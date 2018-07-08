@@ -1,15 +1,41 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(RayConeShooter))]
-	public class RayConeShooterEditor : RayShooterEditor
+	public class RayConeShooterEditor : RayConeShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as RayConeShooter;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(RayConeShooterNet))]
+	public class RayConeShooterNetEditor : RayConeShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as RayConeShooterNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class RayConeShooterDataEditor : RayShooterDataEditor
 	{
 		#region Variables
 
-		private RayConeShooter m_shooter;
 		private SerializedProperty m_count;
 		private SerializedProperty m_maxAngle;
 		private SerializedProperty m_isNormalDistribution;

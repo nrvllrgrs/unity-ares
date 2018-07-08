@@ -3,7 +3,7 @@
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class RayShooterData : ShooterData
+	public class RayShooterData : ShooterData, ICopyable<RayShooterData>
 	{
 		#region Variables
 
@@ -39,6 +39,22 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(RayShooterData other)
+		{
+			other.clip = clip;
+			other.volume = volume;
+
+			other.damage.impactDamage = damage.impactDamage;
+			other.damage.impactImpulse = damage.impactImpulse;
+			other.damage.impactRange = damage.impactRange;
+			other.damage.impactFalloff = damage.impactFalloff;
+
+			other.damage.splashDamage = damage.splashDamage;
+			other.damage.splashImpulse = damage.splashImpulse;
+			other.damage.splashRange = damage.splashRange;
+			other.damage.splashFalloff = damage.splashFalloff;
+		}
 
 		public override void Fire()
 		{

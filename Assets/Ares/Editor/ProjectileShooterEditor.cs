@@ -1,16 +1,45 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Ares;
+using Ares.Networking;
+using Ares.Data;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(ProjectileShooter))]
-	public class ProjectileShooterEditor : ShooterEditor
+	public class ProjectileShooterEditor : ProjectileShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as ProjectileShooter;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ProjectileShooterNet))]
+	public class ProjectileShooterNetEditor : ProjectileShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as ProjectileShooterNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ProjectileShooterDataEditor : ShooterEditor
 	{
 		#region Variables
 
-		private ProjectileShooter m_shooter;
-		private SerializedProperty m_projectileTemplate;
+		protected IShooter<ProjectileShooterData> m_shooter;
+		protected SerializedProperty m_projectileTemplate;
 
 		// Controls
 		private SerializedProperty m_spawnOnBeginFire;
@@ -27,7 +56,6 @@ namespace AresEditor
 		{
 			base.OnEnable();
 
-			m_shooter = (ProjectileShooter)target;
 			m_projectileTemplate = serializedObject.FindProperty("projectileTemplate");
 
 			m_canTrack = m_data.FindPropertyRelative("canTrack");

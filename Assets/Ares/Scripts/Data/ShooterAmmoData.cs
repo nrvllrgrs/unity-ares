@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ShooterAmmoData : ShooterBlockerData
+	public class ShooterAmmoData : ShooterBlockerData, ICopyable<ShooterAmmoData>
 	{
 		#region Variables
 
@@ -230,6 +230,27 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ShooterAmmoData other)
+		{
+			other.isInfinite = isInfinite;
+			other.capacity = capacity;
+			other.count = count;
+
+			other.useMagazine = useMagazine;
+			other.magazineCapacity = magazineCapacity;
+			other.magazineCount = magazineCount;
+			other.shotsPerMagazine = shotsPerMagazine;
+			other.shotsInMagazine = shotsInMagazine;
+			other.isSimultaneousReload = isSimultaneousReload;
+			other.reloadTime = reloadTime;
+			other.consecutiveReloadTime = consecutiveReloadTime;
+			other.reloadButton = reloadButton;
+
+			other.useRegeneration = useRegeneration;
+			other.regenerationDelay = regenerationDelay;
+			other.regenerationRate = regenerationRate;
+		}
 
 		public override void Initialize()
 		{

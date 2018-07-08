@@ -1,17 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(RayShooter))]
-	public class RayShooterEditor : ShooterEditor
+	public class RayShooterEditor : RayShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as RayShooter;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(RayShooterNet))]
+	public class RayShooterNetEditor : RayShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as RayShooterNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class RayShooterDataEditor : ShooterEditor
 	{
 		#region Variables
 
-		private IShooter m_shooter;
+		protected IShooter m_shooter;
 		private SerializedProperty m_damage;
 
 		#endregion
@@ -21,8 +46,6 @@ namespace AresEditor
 		protected override void OnEnable()
 		{
 			base.OnEnable();
-
-			m_shooter = target as RayShooter;
 			m_damage = m_data.FindPropertyRelative("damage");
 		}
 

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ShooterControllerData : AresData
+	public class ShooterControllerData : AresData, ICopyable<ShooterControllerData>
 	{
 		#region Variables
 
@@ -339,6 +339,21 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ShooterControllerData other)
+		{
+			other.isPlayerControlled = isPlayerControlled;
+
+			other.isContinuous = isContinuous;
+			other.isAutoFire = isAutoFire;
+			other.timeBetweenShots = timeBetweenShots;
+			other.fireOnButtonDown = fireOnButtonDown;
+			other.fireButton = fireButton;
+
+			other.isBurstFire = isBurstFire;
+			other.timeBetweenBursts = timeBetweenBursts;
+			other.shotsPerBurst = shotsPerBurst;
+		}
 
 		public void Tick()
 		{

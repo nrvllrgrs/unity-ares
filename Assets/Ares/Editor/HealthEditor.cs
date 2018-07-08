@@ -1,16 +1,43 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Ares;
-using Ares.Data;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(Health))]
-	public class HealthEditor : Editor
+	public class HealthEditor : HealthDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_health = target as Health;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(HealthNet))]
+	public class HealthNetEditor : HealthDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_health = target as HealthNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class HealthDataEditor : Editor
 	{
 		#region Variables
 
-		private Health m_health;
+		protected IHealth m_health;
 		private SerializedProperty m_data;
 
 		private SerializedProperty m_maxPoints;
@@ -32,7 +59,7 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
 			m_health = (Health)target;
 			m_data = serializedObject.FindProperty("m_data");

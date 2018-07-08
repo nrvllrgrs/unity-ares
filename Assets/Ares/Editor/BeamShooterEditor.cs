@@ -1,11 +1,39 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(BeamShooter))]
-	public class BeamShooterEditor : RayShooterEditor
+	public class BeamShooterEditor : BeamShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as BeamShooter;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(BeamShooterNet))]
+	public class BeamShooterNetEditor : BeamShooterDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_shooter = target as BeamShooterNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class BeamShooterDataEditor : RayShooterDataEditor
 	{
 		#region Variables
 

@@ -1,11 +1,87 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEditor;
+using System.Reflection;
+
+using Ares;
+using Ares.Networking;
+using Ares.Data;
 
 namespace AresEditor
 {
 	public static class AresEditorUtility
 	{
 		#region Static Methods
+
+		[MenuItem("Tools/Ares/Convert to NetworkBehaviour")]
+		public static void ConvertToNetworkBehaviour()
+		{
+			GameObject[] objects = Selection.gameObjects;
+			foreach (var src in objects)
+			{
+				GameObject dst = Object.Instantiate(src);
+				dst.name = string.Format("{0} - Net", src.name);
+
+				ConvertToNetworkBehaviour<ShooterController, ShooterControllerNet, ShooterControllerData>(dst);
+				ConvertToNetworkBehaviour<ShooterAmmo, ShooterAmmoNet, ShooterAmmoData>(dst);
+				ConvertToNetworkBehaviour<ShooterCharge, ShooterChargeNet, ShooterChargeData>(dst);
+				ConvertToNetworkBehaviour<ShooterHeat, ShooterHeatNet, ShooterHeatData>(dst);
+				ConvertToNetworkBehaviour<RayShooter, RayShooterNet, RayShooterData>(dst);
+				ConvertToNetworkBehaviour<RayConeShooter, RayConeShooterNet, BeamShooterData>(dst);
+				ConvertToNetworkBehaviour<BeamShooter, BeamShooterNet, BeamShooterData>(dst);
+				ConvertToNetworkBehaviour<ProjectileShooter, ProjectileShooterNet, ProjectileShooterData>(dst);
+				ConvertToNetworkBehaviour<Projectile, ProjectileNet, ProjectileData>(dst);
+				ConvertToNetworkBehaviour<Health, HealthNet, HealthData>(dst);
+
+				// Cleanup components that were required by other components
+				RemoveComponents<ShooterController>(dst);
+			}
+		}
+
+		private static void ConvertToNetworkBehaviour<T, K, J>(GameObject obj)
+			where T : MonoBehaviour
+			where K : NetworkBehaviour
+			where J : AresData
+		{
+			var childrenComponents = obj.GetComponentsInChildren<T>();
+			foreach (var srcComponent in childrenComponents)
+			{
+				J srcData = GetData(srcComponent) as J;
+				if (srcData == null)
+					continue;
+
+				var srcCopyable = srcData as ICopyable<J>;
+				if (srcCopyable == null)
+					continue;
+
+				var dstComponent = obj.AddComponent<K>();
+				J dstData = GetData(dstComponent) as J;
+				if (dstData == null)
+				{
+					Object.Destroy(dstComponent);
+					continue;
+				}
+
+				srcCopyable.CopyTo(dstData);
+
+				// Remove source component
+				Object.DestroyImmediate(srcComponent);
+			}
+		}
+
+		private static void RemoveComponents<T>(GameObject obj)
+			where T : MonoBehaviour
+		{
+			foreach (var comp in obj.GetComponentsInChildren<T>())
+			{
+				Object.DestroyImmediate(comp);
+			}
+		}
+
+		private static AresData GetData(MonoBehaviour behaviour)
+		{
+			return (AresData)behaviour.GetType().GetProperty("data").GetValue(behaviour, null);
+		}
 
 		public static void DrawBoxGroup(string groupName, System.Action action)
 		{

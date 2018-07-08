@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ShooterHeatData : ShooterBlockerData
+	public class ShooterHeatData : ShooterBlockerData, ICopyable<ShooterHeatData>
 	{
 		#region Variables
 
@@ -115,6 +115,12 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ShooterHeatData other)
+		{
+			other.maxHeat = maxHeat;
+			other.heatPerShot = heatPerShot;
+		}
 
 		public override void Initialize()
 		{

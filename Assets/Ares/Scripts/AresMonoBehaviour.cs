@@ -25,6 +25,11 @@ namespace Ares
 			protected set { m_data = value; }
 		}
 
+		public AresData aresData
+		{
+			get { return data; }
+		}
+
 		#endregion
 
 		#region Methods

@@ -1,15 +1,43 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(Projectile))]
-	public class ProjectileEditor : Editor
+	public class ProjectileEditor : ProjectileDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_projectile = target as Projectile;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ProjectileNet))]
+	public class ProjectileNetEditor : ProjectileDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_projectile = target as ProjectileNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ProjectileDataEditor : Editor
 	{
 		#region Variables
 
-		private Projectile m_projectile;
+		protected IProjectile m_projectile;
 		protected SerializedProperty m_data;
 
 		private SerializedProperty m_damage;
@@ -29,9 +57,8 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
-			m_projectile = (Projectile)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			m_damage = m_data.FindPropertyRelative("damage");

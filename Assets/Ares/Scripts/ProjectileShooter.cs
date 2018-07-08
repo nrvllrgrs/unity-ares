@@ -17,7 +17,12 @@ namespace Ares
 		public ShooterData shooterData
 		{
 			get { return data; }
-		} 
+		}
+
+		public ProjectileShooterData projectileShooterData
+		{
+			get { return data; }
+		}
 
 		#endregion
 

@@ -4,7 +4,7 @@ using System.Collections;
 namespace Ares.Data
 {
 	[System.Serializable]
-	public class ShooterChargeData : ShooterBlockerData
+	public class ShooterChargeData : ShooterBlockerData, ICopyable<ShooterChargeData>
 	{
 		#region Variables
 
@@ -63,6 +63,12 @@ namespace Ares.Data
 		#endregion
 
 		#region Methods
+
+		public void CopyTo(ShooterChargeData other)
+		{
+			other.maxCharge = maxCharge;
+			other.resetOnEndFire = resetOnEndFire;
+		}
 
 		public override void Initialize()
 		{

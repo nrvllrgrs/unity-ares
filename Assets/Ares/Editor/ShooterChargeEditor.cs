@@ -1,14 +1,42 @@
 ﻿using UnityEditor;
 using Ares;
+using Ares.Networking;
 
 namespace AresEditor
 {
 	[CustomEditor(typeof(ShooterCharge))]
-	public class ShooterChargeEditor : Editor
+	public class ShooterChargeEditor : ShooterChargeDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_charge = target as ShooterCharge;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	[CustomEditor(typeof(ShooterChargeNet))]
+	public class ShooterChargeNetEditor : ShooterChargeDataEditor
+	{
+		#region Methods
+
+		protected override void OnEnable()
+		{
+			m_charge = target as ShooterChargeNet;
+			base.OnEnable();
+		}
+
+		#endregion
+	}
+
+	public abstract class ShooterChargeDataEditor : Editor
 	{
 		#region Variables
 
-		private ShooterCharge m_charge;
+		protected IShooterCharge m_charge;
 		private SerializedProperty m_data;
 
 		private SerializedProperty m_maxCharge;
@@ -18,9 +46,8 @@ namespace AresEditor
 
 		#region Methods
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
-			m_charge = (ShooterCharge)target;
 			m_data = serializedObject.FindProperty("m_data");
 
 			m_maxCharge = m_data.FindPropertyRelative("maxCharge");
